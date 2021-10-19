@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LvvlStarterNetApi.Core\LvvlStarterNetApi.Core.csproj" />
-    <ProjectReference Include="..\LvvlStarterNetApi.Infrastructure\LvvlStarterNetApi.Infrastructure.csproj" />
     <ProjectReference Include="..\LvvlStarterNetApi.SharedKernel\LvvlStarterNetApi.SharedKernel.csproj" />
   </ItemGroup>
   
