@@ -2,8 +2,6 @@
 using LvvlStarterNetApi.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-using MongoDB.Bson;
 
 namespace LvvlStarterNetApi.Api.Controllers
 {
@@ -36,10 +34,11 @@ namespace LvvlStarterNetApi.Api.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult GetById(string id)
+        public ActionResult<Blog> GetById(string id)
         {
-            return Ok(_BlogService.GetBlogById(id));
+            return _BlogService.GetBlogById(id);
         }
 
         /// <summary>
@@ -48,10 +47,10 @@ namespace LvvlStarterNetApi.Api.Controllers
         [HttpPost("AddBlog")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult Post(Blog Blog)
+        public ActionResult Post(Blog Blog)
         {
             _BlogService.AddBlog(Blog);
-            return Ok();
+            return StatusCode(201);
         }
 
 
@@ -61,10 +60,10 @@ namespace LvvlStarterNetApi.Api.Controllers
         [HttpDelete("DeleteBlog")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete(string id)
+        public ActionResult Delete(string id)
         {
             _BlogService.DeleteBlog(id);
-            return Ok();
+            return StatusCode(204);
         }
         
         /// <summary>
@@ -73,10 +72,10 @@ namespace LvvlStarterNetApi.Api.Controllers
         [HttpPost("Comment")]
         [ProducesResponseType(201)]
         [ProducesResponseType(404)]
-        public IActionResult Comment(string id, string message)
+        public ActionResult Comment(string id, string message)
         {
             _BlogService.AddComment(id, message);
-            return Ok();
+            return StatusCode(201);
         }
         
         /// <summary>
@@ -85,9 +84,9 @@ namespace LvvlStarterNetApi.Api.Controllers
         [HttpGet("GetCommentsOnPost")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public IActionResult GetComment(string id)
+        public ActionResult<List<string>> GetComment(string id)
         {
-            return Ok(_BlogService.GetCommentsOnBlog(id));
+            return _BlogService.GetCommentsOnBlog(id);
         }
     }
 }

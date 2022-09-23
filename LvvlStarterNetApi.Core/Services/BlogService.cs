@@ -33,7 +33,6 @@ namespace LvvlStarterNetApi.Core.Services
 
         public Blog GetBlogById(string id)
         {
-            // Found this on StackOverflow
             var entity = _blogs.Find(blog => blog.Id == ObjectId.Parse(id)).FirstOrDefault();
             return entity;
         }
@@ -58,9 +57,8 @@ namespace LvvlStarterNetApi.Core.Services
         public List<string> GetCommentsOnBlog(string id)
         {
             var entity = _blogs.Find(document => document.Id == ObjectId.Parse(id)).FirstOrDefault();
+            
             return entity.Comments;
         }
-
-
     }
 }
