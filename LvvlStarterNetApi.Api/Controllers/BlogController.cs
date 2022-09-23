@@ -1,4 +1,4 @@
-﻿using LvvlStarterNetApi.Core.Models;
+﻿using LvvlStarterNetApi.SharedKernel.Models;
 using LvvlStarterNetApi.SharedKernel.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -21,12 +21,12 @@ namespace LvvlStarterNetApi.Api.Controllers
         /// <summary>
         /// Retrieves all Blogs from the Db.
         /// </summary>
-        [HttpGet]
+        [HttpGet("GetBlogs")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public ActionResult<List<Blog>> Get()
         {
-            return _BlogService.Get();
+            return _BlogService.GetAllBlogs();
         }
 
         /// <summary>
@@ -34,35 +34,59 @@ namespace LvvlStarterNetApi.Api.Controllers
         /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult GetById(int id)
+        public ActionResult<Blog> GetById(string id)
         {
-            return null;
+            return _BlogService.GetBlogById(id);
         }
 
         /// <summary>
         /// Adds an Blog to the MongoDb.
         /// </summary>
-        [HttpPost]
+        [HttpPost("AddBlog")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult Post(Blog Blog)
+        public ActionResult Post(Blog Blog)
         {
-            return null;
+            _BlogService.AddBlog(Blog);
+            return StatusCode(201);
         }
 
 
         /// <summary>
         /// Deletes an Blog to the MongoDb by a given Id.
         /// </summary>
-        [HttpDelete]
+        [HttpDelete("DeleteBlog")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return null;
+            _BlogService.DeleteBlog(id);
+            return StatusCode(204);
         }
-
-
+        
+        /// <summary>
+        /// Comments on post with given Id.
+        /// </summary>
+        [HttpPost("Comment")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(404)]
+        public ActionResult Comment(string id, string message)
+        {
+            _BlogService.AddComment(id, message);
+            return StatusCode(201);
+        }
+        
+        /// <summary>
+        /// Gets comments from post with given Id.
+        /// </summary>
+        [HttpGet("GetCommentsOnPost")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public ActionResult<List<string>> GetComment(string id)
+        {
+            return _BlogService.GetCommentsOnBlog(id);
+        }
     }
 }

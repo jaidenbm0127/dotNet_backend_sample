@@ -3,7 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace LvvlStarterNetApi.Core.Models
+namespace LvvlStarterNetApi.SharedKernel.Models
 {
     public class Blog : IBlog
     {
@@ -13,5 +13,6 @@ namespace LvvlStarterNetApi.Core.Models
         public string Author { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
+        public List<string> Comments { get; set; }
     }
 }
